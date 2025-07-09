@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arcaea 工具箱</title>
+    <link rel="stylesheet" href="window-controls.css">
+    <link rel="stylesheet" href="scrollbar.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f0f0f0;
+            background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .container {
+            text-align: center;
+            background-color: white;
+            padding: 40px 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            width: 100%;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 2.2rem;
+            background: linear-gradient(135deg, #4CAF50 0%, #6c5ce7 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: inline-block;
+            padding: 10px 20px;
+        }
+        .nav-links {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+        }
+        .nav-button {
+            position: relative;
+            padding: 18px 36px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 12px;
+            transition: all 0.4s cubic-bezier(0.215, 0.61, 0.355, 1);
+            overflow: hidden;
+            margin: 10px;
+            max-width: 320px;
+            width: 100%;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white !important;
+            box-sizing: border-box;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .nav-button::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: all 0.6s ease;
+        }
+        .nav-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        }
+        .nav-button:hover::after {
+            left: 100%;
+        }
+        .nav-button:nth-child(1) {
+            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+        }
+        .nav-button:nth-child(2) {
+            background: linear-gradient(135deg, #2196F3 0%, #0b7dda 100%);
+        }
+        .nav-button:nth-child(3) {
+            background: linear-gradient(135deg, #6c5ce7 0%, #5d4ccf 100%);
+        }
+        @media (min-width: 768px) {
+            .nav-links {
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+            .nav-button {
+                margin: 0 10px;
+            }
+        }
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.8rem;
+                padding: 8px 16px;
+            }
+            .nav-button {
+                padding: 12px 15px;
+                font-size: 1rem;
+                max-width: calc(100% - 16px);
+                margin: 8px auto;
+                white-space: normal;
+            }
+            .container {
+                padding: 15px 10px;
+                border-radius: 10px;
+            }
+            body {
+                padding: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="drag-region"></div>
+    <div class="window-controls">
+        <button id="minimize-btn" class="window-btn">−</button>
+        <button id="close-btn" class="window-btn">×</button>
+    </div>
+    <div class="container">
+        <h1>Arcaea 工具导航</h1>
+        <div class="nav-links">
+            <a href="./Arcaea_Difficulty_Lookup/index.html" class="nav-button">Arcaea 定数查询工具</a>
+            <a href="./Arcaea_Songlist_generator/index.html" class="nav-button">Arcaea Songlist生成器</a>
+            <a href="./Arcaea_ptt_Calculator/index.html" class="nav-button">Arcaea 单曲PTT计算器</a>
+        </div>
+        <p id="info"></p>
+    </div>
+    <script>
+        // 窗口控制按钮事件
+        document.getElementById('minimize-btn').addEventListener('click', () => {
+            window.electronAPI.minimizeWindow();
+        });
+        
+        document.getElementById('close-btn').addEventListener('click', () => {
+            window.electronAPI.closeWindow();
+        });
+    </script>
+</body>
+<script src="./renderer.js"></script>
+</html>

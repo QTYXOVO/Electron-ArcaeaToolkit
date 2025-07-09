@@ -1,0 +1,28 @@
+{
+  "name": "arcaeatoolkit",
+  "version": "0.0.1",
+  "description": "A toolkit created for the game Arcaea. More functions may be added in the future.",
+  "keywords": [
+    "arctoolkit"
+  ],
+  "homepage": "https://github.com/QTYXOVO/Electron-ArcaeaToolkit#readme",
+  "bugs": {
+    "url": "https://github.com/QTYXOVO/Electron-ArcaeaToolkit/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/QTYXOVO/Electron-ArcaeaToolkit.git"
+  },
+  "license": "MIT",
+  "author": "QTYXOVO",
+  "type": "commonjs",
+  "main": "main.js",
+  "scripts": {
+    "test": "node main.js",
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "@electron-forge/cli": "^7.8.1",
+    "electron": "^37.2.0"
+  }
+}
