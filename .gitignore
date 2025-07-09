@@ -137,3 +137,13 @@ dist
 # Vite logs files
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+
+# Custom files
+Arcaea_Difficulty_Lookup/debug.txt
+Arcaea_Difficulty_Lookup/backend.py
+Arcaea_Difficulty_Lookup/requirements.txt
+
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class

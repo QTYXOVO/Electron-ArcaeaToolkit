@@ -84,6 +84,23 @@ searchInput.addEventListener('keypress', (e) => {
 
 difficultySelect.addEventListener('change', performSearch);
 
+// 导入JSON文件按钮事件
+ document.getElementById('import-btn').addEventListener('click', async () => {
+    try {
+        const result = await window.electronAPI.openFileDialog();
+        if (result.success) {
+            alert(result.message);
+            // 重新加载数据
+            fetchSongData();
+        } else {
+            alert(result.message);
+        }
+    } catch (error) {
+        console.error('导入错误:', error);
+        alert('导入过程中发生错误: ' + error.message);
+    }
+});
+
 // 执行搜索
 function performSearch() {
     const searchTerm = searchInput.value.trim().toLowerCase();

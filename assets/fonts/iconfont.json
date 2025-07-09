@@ -1,0 +1,30 @@
+{
+  "id": "4971102",
+  "name": "electron",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "1299763",
+      "name": "Minimize-2",
+      "font_class": "2zuixiaohua-2",
+      "unicode": "e65a",
+      "unicode_decimal": 58970
+    },
+    {
+      "icon_id": "18829236",
+      "name": "箭头",
+      "font_class": "jiantou",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    },
+    {
+      "icon_id": "33987013",
+      "name": "关闭",
+      "font_class": "guanbi",
+      "unicode": "e61e",
+      "unicode_decimal": 58910
+    }
+  ]
+}

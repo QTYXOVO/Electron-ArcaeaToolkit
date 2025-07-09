@@ -33,9 +33,10 @@
     z-index: 9999;
 }
 #back-btn {
-    background-color: #2196F3;
-    color: white;
+    background-color: #2196F3 !important;
+    color: white !important;
 }
+
 .window-btn {
     width: 30px;
     height: 30px;
@@ -50,9 +51,20 @@
     -webkit-app-region: no-drag;
     z-index: 10000;
 }
+
+.window-controls .window-btn .iconfont {
+    font-family: "iconfont" !important;
+    font-size: 18px !important;
+    font-weight: normal !important;
+    color: inherit !important;
+}
 #minimize-btn {
-    background-color: #ffc107;
-    color: white;
+    background-color: #ffc107 !important;
+    color: white !important;
+}
+#close-btn {
+    background-color: #dc3545 !important;
+    color: white !important;
 }
 #close-btn {
     background-color: #dc3545;

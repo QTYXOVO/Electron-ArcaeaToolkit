@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Arcaea 定数查询工具</title>
+    <link rel="stylesheet" href="../assets/fonts/iconfont.css">
     <link rel="stylesheet" href="../window-controls.css">
     <link rel="stylesheet" href="../scrollbar.css">
     <link rel="stylesheet" href="styles.css">
@@ -11,9 +12,9 @@
 <body>
     <div class="drag-region"></div>
     <div class="window-controls">
-        <button id="back-btn" class="window-btn">←</button>
-        <button id="minimize-btn" class="window-btn">−</button>
-        <button id="close-btn" class="window-btn">×</button>
+        <button id="back-btn" class="window-btn"><i class="iconfont icon-jiantou"></i></button>
+        <button id="minimize-btn" class="window-btn"><i class="iconfont icon-2zuixiaohua-2"></i></button>
+        <button id="close-btn" class="window-btn"><i class="iconfont icon-guanbi"></i></button>
     </div>
     <br></br>
     <div class="container">
@@ -24,7 +25,10 @@
             <p>数据来源于Arcaea中文维基 <a href="https://arcwiki.mcd.blue/" target="_blank">链接</a></p>
         </div>
     </div>
-    <button id="about-button" style="margin: 10px 0; padding: 8px 16px; cursor: pointer;">关于</button>
+        <div class="button-group">
+            <button id="about-button" class="action-btn">关于</button>
+            <button id="import-btn" class="action-btn">手动更新数据</button>
+        </div>
         <h1>Arcaea 定数查询</h1>
         <div class="search-container">
             <input type="text" id="search-input" placeholder="输入歌曲名称搜索..." autocomplete="off">

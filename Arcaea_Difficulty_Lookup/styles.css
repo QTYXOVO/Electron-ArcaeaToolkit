@@ -280,6 +280,34 @@ h1 {
     color: black;
 }
 
+/* 按钮组样式 */
+.button-group {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 15px 0;
+}
+
+/* 操作按钮样式 */
+.action-btn {
+    padding: 8px 16px;
+    background-color: #4a6fa5;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.action-btn:hover {
+    background-color: #3a5a8c;
+}
+
+.action-btn:active {
+    background-color: #2d4373;
+}
+
 /* 加载动画 */
 .loading {
     display: none;

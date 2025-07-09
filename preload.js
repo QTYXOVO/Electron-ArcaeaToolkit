@@ -7,5 +7,6 @@ contextBridge.exposeInMainWorld('electronAPI', {
     chrome: () => process.versions.chrome,
     node: () => process.versions.node,
     electron: () => process.versions.electron
-  }
+  },
+  openFileDialog: () => ipcRenderer.invoke('open-file-dialog')
 });
