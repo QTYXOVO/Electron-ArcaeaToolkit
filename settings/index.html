@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>设置 - Arcaea 工具箱</title>
+    <link rel="stylesheet" href="../window-controls.css">
+    <link rel="stylesheet" href="../scrollbar.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f0f0f0;
+            background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-top: 60px; /* 增加顶部边距以避免被拖拽区域遮挡 */
+        }
+        h1 {
+            color: #333;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+            margin-top: 0;
+        }
+        .setting-group {
+            margin-bottom: 25px;
+        }
+        .setting-group h2 {
+            font-size: 1.3rem;
+            color: #555;
+            margin-bottom: 15px;
+        }
+        .btn {
+            padding: 12px 24px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #2196F3 0%, #0b7dda 100%);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 10px rgba(0,0,0,0.15);
+        }
+        .status-message {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 8px;
+            display: none;
+        }
+        .success {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+            display: block;
+        }
+        .error {
+            background-color: #ffebee;
+            color: #c62828;
+            display: block;
+        }
+        .window-controls {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="drag-region"></div> <!-- 添加拖拽挡板 -->
+    <div class="back-btn-container">
+        
+    </div>
+    <div class="window-controls">
+        <button id="back-btn" class="window-btn">←</button>
+        <button id="minimize-btn" class="window-btn">−</button>
+        <button id="close-btn" class="window-btn">×</button>
+    </div>
+    <div class="container">
+        <h1>应用设置</h1>
+        
+        <div class="setting-group">
+            <h2>更新设置</h2>
+            <button id="check-update-btn" class="btn">检查更新</button>
+            <div id="update-status" class="status-message"></div>
+        </div>
+    </div>
+
+    <script>
+        // 窗口控制
+        document.getElementById('minimize-btn').addEventListener('click', () => {
+            window.electronAPI.minimizeWindow();
+        });
+        
+        document.getElementById('close-btn').addEventListener('click', () => {
+            window.electronAPI.closeWindow();
+        });
+        
+        // 检查更新按钮
+        const checkUpdateBtn = document.getElementById('check-update-btn');
+        const updateStatus = document.getElementById('update-status');
+        
+        checkUpdateBtn.addEventListener('click', async () => {
+            checkUpdateBtn.disabled = true;
+            checkUpdateBtn.textContent = '检查中...';
+            updateStatus.textContent = '';
+            updateStatus.className = 'status-message';
+            
+            try {
+                const result = await window.electronAPI.checkForUpdates();
+                updateStatus.textContent = result;
+                updateStatus.className = 'status-message success';
+            } catch (error) {
+                updateStatus.textContent = error.message;
+                updateStatus.className = 'status-message error';
+            } finally {
+                checkUpdateBtn.disabled = false;
+                checkUpdateBtn.textContent = '检查更新';
+            }
+        });
+        // 添加返回按钮功能
+        document.getElementById('back-btn').addEventListener('click', () => {
+            window.location.href = '../index.html';
+        });
+    </script>
+</body>
+</html>

@@ -71,6 +71,58 @@ const createWindow = () => {
       return { success: false, message: `处理文件时出错: ${error.message}` };
     }
   })
+
+  // 添加检查更新的IPC处理
+  ipcMain.handle('check-for-updates', async () => {
+    const maxRetries = 3;
+    const retryDelay = 2000; // 2秒重试间隔
+    let retries = 0;
+
+    return new Promise((resolve, reject) => {
+      const attemptCheck = () => {
+        const onUpdateAvailable = () => {
+          cleanupListeners();
+          resolve('发现新版本，正在下载...');
+        };
+
+        const onUpdateNotAvailable = () => {
+          cleanupListeners();
+          resolve('当前已是最新版本');
+        };
+
+        const onError = (error) => {
+          cleanupListeners();
+          if (retries < maxRetries && isNetworkError(error)) {
+            retries++;
+            setTimeout(attemptCheck, retryDelay);
+          } else {
+            reject(new Error(`更新检查失败: ${error.message}`));
+          }
+        };
+
+        const cleanupListeners = () => {
+          autoUpdater.removeListener('update-available', onUpdateAvailable);
+          autoUpdater.removeListener('update-not-available', onUpdateNotAvailable);
+          autoUpdater.removeListener('error', onError);
+        };
+
+        // 使用once确保监听器只触发一次
+        autoUpdater.once('update-available', onUpdateAvailable);
+        autoUpdater.once('update-not-available', onUpdateNotAvailable);
+        autoUpdater.once('error', onError);
+
+        autoUpdater.checkForUpdates();
+      };
+
+      // 判断是否为网络错误
+      function isNetworkError(error) {
+        const networkErrors = ['ERR_CONNECTION_RESET', 'ERR_TIMED_OUT', 'ERR_INTERNET_DISCONNECTED'];
+        return networkErrors.some(code => error.message.includes(code));
+      }
+
+      attemptCheck();
+    });
+  })
 }
 
 // 配置自动更新
@@ -82,7 +134,10 @@ function setupAutoUpdater() {
     repo: 'Electron-ArcaeaToolkit',
     releaseType: 'release'
   });
-
+  
+  // 强制在开发模式下检查更新
+  autoUpdater.forceDevUpdateConfig = true;
+  
   // 检查更新
   autoUpdater.checkForUpdates();
 
@@ -110,10 +165,17 @@ function setupAutoUpdater() {
   });
 
   autoUpdater.on('error', (error) => {
+    let errorMessage = `更新过程中出错: ${error.message}`;
+    // 网络错误处理
+    if (error.message.includes('ERR_CONNECTION_RESET')) {
+      errorMessage = '网络连接重置，请检查您的网络连接或稍后重试。';
+    } else if (error.message.includes('404')) {
+      errorMessage = '未找到更新源，请确认应用配置是否正确。';
+    }
     dialog.showMessageBox({
       type: 'error',
       title: '更新错误',
-      message: `更新过程中出错: ${error.message}`,
+      message: errorMessage,
       buttons: ['确定']
     });
   });
