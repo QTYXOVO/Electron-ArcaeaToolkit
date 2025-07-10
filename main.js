@@ -1,4 +1,5 @@
 const { app, BrowserWindow, ipcMain, dialog } = require('electron/main')
+const { autoUpdater } = require('electron-updater');
 const fs = require('fs');
 const path = require('node:path')
 
@@ -72,18 +73,65 @@ const createWindow = () => {
   })
 }
 
+// 配置自动更新
+function setupAutoUpdater() {
+  // 设置更新源 - 替换为你的GitHub信息
+  autoUpdater.setFeedURL({
+    provider: 'github',
+    owner: 'QTYXOVO',
+    repo: 'Electron-ArcaeaToolkit',
+    releaseType: 'release'
+  });
+
+  // 检查更新
+  autoUpdater.checkForUpdates();
+
+  // 监听更新事件
+  autoUpdater.on('update-available', () => {
+    dialog.showMessageBox({
+      type: 'info',
+      title: '更新可用',
+      message: '发现新版本，正在下载...',
+      buttons: ['确定']
+    });
+  });
+
+  autoUpdater.on('update-downloaded', () => {
+    dialog.showMessageBox({
+      type: 'info',
+      title: '更新准备就绪',
+      message: '更新已下载完成，是否立即重启应用？',
+      buttons: ['是', '否']
+    }).then((result) => {
+      if (result.response === 0) {
+        autoUpdater.quitAndInstall();
+      }
+    });
+  });
+
+  autoUpdater.on('error', (error) => {
+    dialog.showMessageBox({
+      type: 'error',
+      title: '更新错误',
+      message: `更新过程中出错: ${error.message}`,
+      buttons: ['确定']
+    });
+  });
+}
+
 app.whenReady().then(() => {
-  createWindow()
+  createWindow();
+  setupAutoUpdater();
 
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {
-      createWindow()
+      createWindow();
     }
-  })
+  });
 })
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
-    app.quit()
+    app.quit();
   }
 })

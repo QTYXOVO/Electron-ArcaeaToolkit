@@ -1,6 +1,6 @@
 {
   "name": "arcaeatoolkit",
-  "version": "0.0.1",
+  "version": "0.0.1-test.1",
   "description": "A toolkit created for the game Arcaea. More functions may be added in the future.",
   "keywords": [
     "arctoolkit"
@@ -19,10 +19,16 @@
   "main": "main.js",
   "scripts": {
     "test": "node main.js",
-    "start": "electron ."
+    "start": "electron .",
+    "package": "electron-forge package",
+    "make": "electron-forge make",
+    "publish": "electron-forge publish"
   },
   "devDependencies": {
     "@electron-forge/cli": "^7.8.1",
-    "electron": "^37.2.0"
+    "@electron-forge/maker-squirrel": "^7.8.1",
+    "@electron-forge/publisher-github": "^7.8.1",
+    "electron": "^37.2.0",
+    "electron-updater": "^6.6.2"
   }
 }
